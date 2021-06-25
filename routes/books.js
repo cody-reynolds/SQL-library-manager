@@ -16,16 +16,48 @@ const Book = require('../models').Book;
    }
  }
 
-/* GET books listing. */
+ //Route 2 of 7: Show (GET) the full list of books
 router.get('/',  asyncHandler(async (req, res) => {
   const books = await Book.findAll();
   res.render('books/index', {books});
 }));
 
-
+//Route 3 of 7: Show (GET) the create new book form
 router.get('/new_book.html', asyncHandler(async (req, res) => {
     res.render('books/new-book', { book: {}});
 }));
+
+//Route 4 of 7: POST a new book to the database
+router.post('/', asyncHandler(async (req, res) => { //Why does the route have to be the root?
+    let book;
+    try {
+        book = await Book.create(req.body);
+        res.redirect("/books");
+    } catch {
+        if(error.name === 'SequelizeValidationError') {
+            book = await Book.build(req.body);
+            res.render("books/new-book", {book, errors: error.errors})
+        } else {
+            throw error;
+        }
+    }
+}));
+
+//Route 5 of 7: Show (GET) book detail form
+router.get('/:id.html', asyncHandler(async (req, res) => {
+    const book = await Book.findByPk(req.params.id);
+    if(book){
+        res.render("books/update-book", {book})
+    } else {
+        res.sendStatus(404);
+    }
+}));
+
+//Route 6 of 7: Update (POST) book info from the database
+router.post('/:id/edit', )
+
+
+//Route 7 of 7: Delete a book from the database
 
 
 module.exports = router;
