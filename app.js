@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const routes = require('./routes/index');
+const books = require('./routes/books')
 
 const app = express();
 
@@ -20,24 +21,30 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Delegates routing at the root route to 'routes/index.js' imported above
 app.use('/', routes);
+app.use('/books', books);
 
-// catch 404 and forward to error handler
+//catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  const err = new Error;
+    err.status = 404;
+    err.message = "The page you are looking for does not exist!"
+  res.status(404).render('page-not-found', {err});
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  if(err.status === 404){
+    console.log('404 handler called')
+    res.status(404).render('page-not-found', {err});
+  } else {
+    console.log(`${err.status} error handler called - Something went wrong on the server`)
+    res.status(err.status).render('error', {err});
+  }
 });
 
+//Tests the connection to the database.
 (async () => {
   try {
     await sequelize.authenticate();

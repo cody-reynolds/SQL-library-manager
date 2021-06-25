@@ -1,7 +1,10 @@
 doctype html
 html
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    block title
+    //- It's OK to start with just '/stylesheets/...' here because of how the static route is set up in app.js
+    link(rel='stylesheet' href='/stylesheets/style.css') 
+
+
   body
     block content

@@ -1,27 +1,11 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
 
-//Imports the Book model
-const Book = require('../models').Book;
+//Changes the standard app.get and app.use calls to refer to the router
+const router = express.Router();
 
-// /* Handler function to wrap each route. */
-// function asyncHandler(cb){
-//   return async(req, res, next) => {
-//     try {
-//       await cb(req, res, next)
-//     } catch(error){
-//       // Forward error to the global error handler
-//       next(error);
-//     }
-//   }
-// }
-
-
-/* GET home page. */
-router.get('/', async function(req, res, next) {
-  const books = await Book.findAll();
-  console.log(books);
-  res.json(books);
+//Redirects routing at the root route to /books
+router.get('/', (req, res, next) => {
+  res.redirect('/books')
 });
 
 module.exports = router;
