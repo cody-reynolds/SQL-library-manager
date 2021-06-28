@@ -44,7 +44,7 @@ router.post('/', asyncHandler(async (req, res) => { //Why does the route have to
 }));
 
 //Route 5 of 7: Show (GET) book detail form
-router.get('/:id.html', asyncHandler(async (req, res) => {
+router.get('/:id/edit', asyncHandler(async (req, res) => {
     const book = await Book.findByPk(req.params.id);
     if(book){
         res.render("books/update-book", {book})
@@ -54,7 +54,26 @@ router.get('/:id.html', asyncHandler(async (req, res) => {
 }));
 
 //Route 6 of 7: Update (POST) book info from the database
-router.post('/:id/edit', )
+router.post('/:id/edit', asyncHandler(async (req, res) => {
+    let book;
+    try {
+        book = await Book.findByPk(req.params.id);
+        if (book) {
+            await book.update(req.body);
+            res.redirect("/books");
+        } else {
+            res.sendStatus(404);
+        }
+     } catch (error) {
+            if(error.name === "SequelizeValidationError") {
+                book = await Book.build(req.body);
+                book.id = req.params.id;
+                res.render(`books/${req.params.id}/edit`, {book, errors: error.errors})
+            } else {
+                throw error;
+            }
+        }
+}));
 
 
 //Route 7 of 7: Delete a book from the database
