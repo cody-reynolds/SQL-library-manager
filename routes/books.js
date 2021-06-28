@@ -23,7 +23,7 @@ router.get('/',  asyncHandler(async (req, res) => {
 }));
 
 //Route 3 of 7: Show (GET) the create new book form
-router.get('/new_book.html', asyncHandler(async (req, res) => {
+router.get('/new', asyncHandler(async (req, res) => {
     res.render('books/new-book', { book: {}});
 }));
 
@@ -44,7 +44,7 @@ router.post('/', asyncHandler(async (req, res) => { //Why does the route have to
 }));
 
 //Route 5 of 7: Show (GET) book detail form
-router.get('/:id/edit', asyncHandler(async (req, res) => {
+router.get('/:id', asyncHandler(async (req, res) => {
     const book = await Book.findByPk(req.params.id);
     if(book){
         res.render("books/update-book", {book})
@@ -54,7 +54,7 @@ router.get('/:id/edit', asyncHandler(async (req, res) => {
 }));
 
 //Route 6 of 7: Update (POST) book info from the database
-router.post('/:id/edit', asyncHandler(async (req, res) => {
+router.post('/:id', asyncHandler(async (req, res) => {
     let book;
     try {
         book = await Book.findByPk(req.params.id);

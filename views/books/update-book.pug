@@ -5,7 +5,7 @@ block title
 
 block content
   h1 Update Book
-  form(method='post' action=`/books/${book.id}/edit` onsubmit='/books')
+  form(method='post' action=`/books/${book.id}` onsubmit='/books')
     p
       label(for='title') Title
       input#title(name='title' type='text' value=`${book.title}`)

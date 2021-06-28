@@ -34,7 +34,7 @@ app.use('/books', books);
 app.use(function(req, res, next) {
   const err = new Error;
     err.status = 404;
-    err.message = "The page you are looking for does not exist!"
+    err.message = "Sorry! We couldn't find the page you were looking for."
   res.status(404).render('page-not-found', {err});
 });
 
@@ -48,15 +48,5 @@ app.use(function(err, req, res, next) {
     res.status(err.status).render('error', {err});
   }
 });
-
-//Tests the connection to the database
-// (async () => {
-//   try {
-//     await sequelize.authenticate();
-//     console.log('Connection has been established successfully.');
-//   } catch (error) {
-//     console.error('Unable to connect to the database:', error);
-//   }
-// })()
 
 module.exports = app;
