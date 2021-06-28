@@ -19,12 +19,12 @@ const Book = require('../models').Book;
  //Route 2 of 7: Show (GET) the full list of books
 router.get('/',  asyncHandler(async (req, res) => {
   const books = await Book.findAll();
-  res.render('books/index', {books});
+  res.render('books/index', {books, title: "Library Manager - All Books"});
 }));
 
 //Route 3 of 7: Show (GET) the create new book form
 router.get('/new', asyncHandler(async (req, res) => {
-    res.render('books/new-book', { book: {}});
+    res.render('books/new-book', { book: {}, title: "Library Manager - New Book"});
 }));
 
 //Route 4 of 7: POST a new book to the database
@@ -48,7 +48,7 @@ router.post('/', asyncHandler(async (req, res) => { //Why does the route have to
 router.get('/:id', asyncHandler(async (req, res) => {
     const book = await Book.findByPk(req.params.id);
     if(book){
-        res.render("books/update-book", {book})
+        res.render("books/update-book", {book, title: "Library Manager - Update Book Details"})
     } else {
         res.sendStatus(404);
     }

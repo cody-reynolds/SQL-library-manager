@@ -1,12 +1,10 @@
 extends ../layout
 
-block title
-  |New Book
-
 block content
-  include errors 
-  
   h1 New Book
+
+  include errors 
+
   form(action="/books", method="post")
     p
       label(for='title') Title
