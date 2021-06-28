@@ -33,8 +33,9 @@ router.post('/', asyncHandler(async (req, res) => { //Why does the route have to
     try {
         book = await Book.create(req.body);
         res.redirect("/books");
-    } catch {
+    } catch (error) {
         if(error.name === 'SequelizeValidationError') {
+            console.log(req.body)
             book = await Book.build(req.body);
             res.render("books/new-book", {book, errors: error.errors})
         } else {
@@ -65,16 +66,17 @@ router.post('/:id', asyncHandler(async (req, res) => {
             res.sendStatus(404);
         }
      } catch (error) {
+         console.log(error.name);
+         console.log(req.params.id);
             if(error.name === "SequelizeValidationError") {
                 book = await Book.build(req.body);
                 book.id = req.params.id;
-                res.render(`books/${req.params.id}/edit`, {book, errors: error.errors})
+                res.render(`books/update-book`, {book, errors: error.errors})
             } else {
                 throw error;
             }
         }
 }));
-
 
 //Route 7 of 7: Delete a book from the database
 router.post('/:id/delete', asyncHandler(async (req ,res) => {

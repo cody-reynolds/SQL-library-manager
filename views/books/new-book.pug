@@ -4,6 +4,8 @@ block title
   |New Book
 
 block content
+  include errors 
+  
   h1 New Book
   form(action="/books", method="post")
     p

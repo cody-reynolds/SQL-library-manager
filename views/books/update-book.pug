@@ -5,6 +5,9 @@ block title
 
 block content
   h1 Update Book
+
+  include errors
+
   form(method='post' action=`/books/${book.id}` onsubmit='/books')
     p
       label(for='title') Title

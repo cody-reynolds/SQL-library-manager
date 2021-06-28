@@ -44,8 +44,9 @@ app.use(function(err, req, res, next) {
     console.log('404 handler called')
     res.status(404).render('page-not-found', {err});
   } else {
-    console.log(`${err.status} error handler called - Something went wrong on the server`)
-    res.status(err.status).render('error', {err});
+    const status = err.status || 500;
+    res.status(status);
+    res.render('error', {err});
   }
 });
 
