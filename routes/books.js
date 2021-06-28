@@ -24,7 +24,7 @@ router.get('/',  asyncHandler(async (req, res) => {
 
 //Route 3 of 7: Show (GET) the create new book form
 router.get('/new', asyncHandler(async (req, res) => {
-    res.render('books/new-book', { book: {}, title: "Library Manager - New Book"});
+    res.render('books/new-book', { book: {}, title: "New Book"});
 }));
 
 //Route 4 of 7: POST a new book to the database
@@ -48,7 +48,7 @@ router.post('/', asyncHandler(async (req, res) => { //Why does the route have to
 router.get('/:id', asyncHandler(async (req, res) => {
     const book = await Book.findByPk(req.params.id);
     if(book){
-        res.render("books/update-book", {book, title: "Library Manager - Update Book Details"})
+        res.render("books/update-book", {book, title: `Update Book - ${book.title}`})
     } else {
         res.sendStatus(404);
     }
@@ -71,7 +71,7 @@ router.post('/:id', asyncHandler(async (req, res) => {
             if(error.name === "SequelizeValidationError") {
                 book = await Book.build(req.body);
                 book.id = req.params.id;
-                res.render(`books/update-book`, {book, errors: error.errors})
+                res.render(`books/update-book`, {book, errors: error.errors, title: `Update Book - ${book.title}` })
             } else {
                 throw error;
             }
