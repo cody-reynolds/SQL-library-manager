@@ -89,7 +89,7 @@ router.post('/:id/delete', asyncHandler(async (req ,res) => {
     } else {
       const error = new Error("The book you are looking for does not exist!")
       error.status = 404;
-      throw Error;
+      throw error;
     }
   }));
 
