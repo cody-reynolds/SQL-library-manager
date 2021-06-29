@@ -2,7 +2,6 @@
 
 **Synopsis**
 \
-\
  This is an app that uses Express, SQLite, and Sequelize to create a library manager. The user can add, edit, and delete books from the database. The app also provides some server-side validation of the Title and Author fields, which are not allowed to be null.
 \
 \
