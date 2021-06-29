@@ -50,7 +50,9 @@ router.get('/:id', asyncHandler(async (req, res) => {
     if(book){
         res.render("books/update-book", {book, title: `Update Book - ${book.title}`})
     } else {
-        res.sendStatus(404);
+      const error = new Error(`The book with the ID you requested (${req.params.id}) does not exist.`)
+      error.status = 404;
+      throw error;    
     }
 }));
 
@@ -63,7 +65,7 @@ router.post('/:id', asyncHandler(async (req, res) => {
             await book.update(req.body);
             res.redirect("/books");
         } else {
-            res.sendStatus(404);
+            throw error;
         }
      } catch (error) {
          console.log(error.name);
