@@ -87,7 +87,9 @@ router.post('/:id/delete', asyncHandler(async (req ,res) => {
       await book.destroy();
       res.redirect("/books");
     } else {
-      res.sendStatus(404);
+      const error = new Error("The book you are looking for does not exist!")
+      error.status = 404;
+      throw Error;
     }
   }));
 
