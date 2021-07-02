@@ -32,6 +32,7 @@ app.use('/books', books);
 
 //Catches 404 errors
 app.use(function(req, res, next) {
+  console.log('404 error handler called')
   const err = new Error;
     err.status = 404;
     err.message = "Sorry! We couldn't find the page you were looking for."
@@ -40,8 +41,8 @@ app.use(function(req, res, next) {
 
 //Global error handler
 app.use(function(err, req, res, next) {
+  console.log('Global error handler called')
   if(err.status === 404){
-    console.log('404 handler called')
     res.status(404).render('page-not-found', {err});
   } else {
     const status = err.status || 500;
