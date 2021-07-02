@@ -28,7 +28,7 @@ router.get('/new', asyncHandler(async (req, res) => {
 }));
 
 //Route 4 of 7: POST a new book to the database
-router.post('/', asyncHandler(async (req, res) => { //Why does the route have to be the root?
+router.post('/new', asyncHandler(async (req, res) => { //Why does the route have to be the root?
     let book;
     try {
         book = await Book.create(req.body);
